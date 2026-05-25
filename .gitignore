@@ -1,0 +1,78 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+MANIFEST
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Type checking
+.mypy_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# REGA-specific large outputs
+*.h5ad
+*.pt
+*.npz
+*.h5
+output/
+/tmp/
+
+# Intermediate pipeline files
+blocks/
+*_named.bed
+*_peak_motif.txt
+*_gex.csv
+*_re_tg.txt
+*_rega_input.h5ad
+*_rega_result.h5ad
+build_input_intermediate/
+
+# HOMER intermediates
+homerResults/
+knownResults/
+*_homer_raw.txt
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Logs
+*.log
+
+# System
+Thumbs.db
+
+# Raw input data (large; not for public release)
+input_data/
+
+# Development notes (not for public release)
+CLAUDE.md
+
+# Original development scripts (replaced by src/rega/)
+process/
+downstream/

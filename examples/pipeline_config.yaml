@@ -1,0 +1,82 @@
+# REGA pipeline configuration — naiveCD4T example
+# Run with: rega pipeline --config examples/pipeline_config.yaml
+#
+# NOTE: The peaks BED file must be uncompressed before running.
+#   gunzip -c examples/data/naiveCD4T_ref_peaks.bed.gz > /tmp/naiveCD4T_ref_peaks.bed
+# Then set peak_bed below to the uncompressed path.
+#
+# All relative paths are resolved relative to the directory containing this file.
+
+# ── Input data ────────────────────────────────────────────────────────────────
+data:
+  expression_csv: "data/naiveCD4T_pseudobulk_counts.csv.gz"  # gene × sample counts (gzip OK)
+  peak_bed:       "/tmp/naiveCD4T_ref_peaks.bed"             # uncompressed BED required
+  meta_csv:       "data/Metadata.csv"                        # optional; enables covariate correction
+  input_type:     "counts"                                   # counts|cpm|logcpm|tpm|logtpm
+  motif_tf_file:  null                                       # optional: 2-col TSV motif→TF
+
+# ── Reference files ───────────────────────────────────────────────────────────
+reference:
+  genome:     "hg38"
+  tss_file:   null   # null → auto-locate via ReferenceData; or provide absolute path
+  motif_file: null   # path to HOMER motif database (.motif file); required unless --skip-motif
+
+# ── Output ────────────────────────────────────────────────────────────────────
+output:
+  base_dir: "run_naiveCD4T/"   # created if absent; relative to this config file
+  prefix:   "naiveCD4T"        # used as prefix for all output filenames
+
+# ── Step: peaks ──────────────────────────────────────────────────────────────
+peaks:
+  sep: "\t"   # field separator in input BED
+
+# ── Step: preprocess ─────────────────────────────────────────────────────────
+preprocess:
+  min_expression_threshold: null    # null → use input_type default (counts→1.0 logCPM)
+  min_expression_frac:       0.05   # gene must be expressed in ≥5% of samples
+  remove_mt_genes:           true
+  mt_gene_prefix:            ["MT-", "mt-"]
+
+# ── Step: retg ───────────────────────────────────────────────────────────────
+retg:
+  window: 300000   # bp each side of TSS (600 kb total cis window)
+  chroms: null     # null → all autosomes + chrX; or e.g. ["chr1","chr2"]
+
+# ── Step: motif ──────────────────────────────────────────────────────────────
+motif:
+  homer_bin:          "findMotifsGenome.pl"   # or absolute path to HOMER binary
+  threads:            4                       # parallelism passed to HOMER
+  keep_intermediate:  false                   # true → keep raw HOMER output dir
+
+# ── Step: build_input ────────────────────────────────────────────────────────
+build_input:
+  tau: 1.0e5   # distance-decay scale (bp); default 100 kb replicates original paper
+
+# ── Step: train ──────────────────────────────────────────────────────────────
+train:
+  K:      20      # number of regulatory modules; paper default
+  device: null    # null → auto (cuda if available, else cpu); or "cuda"/"cpu"
+
+  # Per-chromosome .npz blocks are created internally before training.
+  # Set keep_blocks: true to retain them in model/blocks/ for inspection.
+  keep_blocks: false
+
+  # Phase 1 — initialization (fixed outer iterations, no early stopping)
+  phase1_inner_iters:   2000   # inner optimization steps per outer iteration
+  phase1_outer_iters:   30     # number of outer iterations for Phase 1
+
+  # Phase 2 — refinement with early stopping
+  phase2_inner_iters:   500    # inner steps per outer iteration in Phase 2
+  phase2_min_outer:     3000   # minimum outer iterations before patience counts
+  phase2_max_outer:     6000   # hard cap on Phase 2 outer iterations
+  early_stop_patience:  50     # consecutive non-improving outers to trigger stop
+  early_stop_rel_tol:   1.0e-5 # relative loss improvement threshold
+
+  # Regularization (L1 on each factor; 0.0 = no regularization)
+  lam_W: 0.0
+  lam_B: 0.0
+  lam_V: 0.0
+  lam_H: 0.0
+
+  # Logging
+  log_every_inner: 500   # print loss every N inner iterations

@@ -1,0 +1,6 @@
+chr1	5000	GENE_A	+
+chr1	10000	GENE_B	-
+chr1	15000	GENE_C	+
+chr1	16500	GENE_D	+
+chr1	500	GENE_E	+
+chr2	5000	GENE_F	+

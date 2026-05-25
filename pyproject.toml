@@ -1,0 +1,79 @@
+[build-system]
+requires      = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name        = "rega"
+dynamic     = ["version"]
+description = "Reference Regulatory Element-Guided Gene Expression Analysis for Mechanistic Inference of Gene Regulatory Networks"
+requires-python = ">=3.9"
+license     = "MIT"
+authors     = [{name = "Lixin Ren", email = "rlxmath017@gmail.com"}]
+maintainers = [{name = "Lixin Ren", email = "rlxmath017@gmail.com"}]
+keywords    = [
+    "bioinformatics",
+    "gene regulatory networks",
+    "RE-TG",
+    "motif",
+    "transcription factor",
+    "single-cell",
+]
+dependencies = [
+    "numpy",
+    "pandas",
+    "pybedtools",
+    "scipy",
+    "h5py",
+    "anndata",
+    "click>=8.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=24.0",
+    "ruff>=0.4",
+    "mypy",
+]
+docs = [
+    "sphinx>=7.0",
+    "sphinx-rtd-theme",
+    "myst-parser",
+]
+
+[project.scripts]
+rega = "rega.cli:main"
+
+[project.urls]
+Homepage       = "https://github.com/Lixin017/REGA"
+Documentation  = "https://github.com/Lixin017/REGA/blob/main/docs/tutorial.md"
+Repository     = "https://github.com/Lixin017/REGA.git"
+Issues         = "https://github.com/Lixin017/REGA/issues"
+
+[tool.setuptools.dynamic]
+version = {attr = "rega._version.__version__"}
+
+[tool.setuptools.packages.find]
+where      = ["src"]
+namespaces = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts   = "-v"
+
+[tool.ruff]
+line-length    = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501"]   # line length managed by black
+
+[tool.black]
+line-length = 100
+
+[tool.mypy]
+python_version         = "3.9"
+ignore_missing_imports = true

@@ -1,0 +1,30 @@
+name: rega
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.11
+
+  # Scientific computing
+  - numpy>=1.23
+  - pandas>=2.0
+  - scipy>=1.10
+  - scikit-learn
+  - statsmodels
+
+  # Bioinformatics
+  - anndata>=0.10
+  - pybedtools
+  - h5py
+  - bedtools>=2.30
+
+  # CLI
+  - click>=8.0
+  - pyyaml
+
+  # Testing
+  - pytest
+
+  - pip
