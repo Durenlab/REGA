@@ -9,7 +9,7 @@ public dataset.
 
 | File | Size | Description |
 |------|------|-------------|
-| `data/naiveCD4T_pseudobulk_counts.csv.gz` | ~9.2 MB | Gene × sample raw count matrix (12,000+ genes × 981 pseudobulk samples). Each sample is aggregated UMI counts from one donor's naive CD4+ T cells. |
+| `data/naiveCD4T_pseudobulk_counts.csv.gz` | ~9.2 MB | Gene × sample raw count matrix (16,000+ genes × 981 pseudobulk samples). Each sample is aggregated UMI counts from one donor's naive CD4+ T cells. |
 | `data/naiveCD4T_ref_peaks.bed.gz` | ~1.3 MB | Reference ATAC-seq peak set (100,350 peaks, hg38). Peaks were called from the 10x Genomics PBMC Multiome public dataset and used as reference regulatory elements. |
 | `data/Metadata.csv` | 27 KB | Sample metadata: donor ID, age, sex. Used for covariate correction in `rega preprocess`. |
 
