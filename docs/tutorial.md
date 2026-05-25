@@ -474,7 +474,7 @@ extract_grn(adata, out_dir="analysis/grn/")
 
 **Outputs**:
 - `RE_TG.tsv` — columns: target_gene, regulatory_element, score
-- `TF_TG.tsv` — columns: target_gene, TF, score (expression-weighted)
+- `TF_TG.tsv` — columns: target_gene, TF, score
 
 ---
 
