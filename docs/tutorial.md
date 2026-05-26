@@ -16,8 +16,6 @@ Given a gene expression matrix and a reference peak set, REGA:
 3. Learns regulatory modules connecting TFs, regulatory elements, and target genes
 4. Extracts interpretable regulatory networks: RE→gene, TF→gene
 
-> The detailed mathematical formulation (model architecture, loss function,
-> optimization) will be described in the forthcoming REGA paper.
 
 ### Supported data types
 
@@ -38,7 +36,7 @@ The expression unit must be one of: `counts`, `cpm`, `logcpm`, `tpm`, or `logtpm
 |------|-------------|--------|----------------|
 | 1 | `rega peaks` | `rega.peaks` | raw BED → named BED |
 | 2 | `rega motif` | `rega.motif` | named BED → peak_motif.txt |
-| 3 | `rega preprocess` | `rega.preprocessing` | count matrix → logCPM CSV |
+| 3 | `rega preprocess` | `rega.preprocessing` | count matrix → log2(CPM+1) CSV |
 | 4 | `rega retg` | `rega.retg` | named BED + TSS → RE-TG TSV |
 | 5+6 | `rega build-input` | `rega.matrices` + `rega.anndata_builder` | RE-TG + GEX + motif → h5ad |
 | 7+8 | `rega train` | `rega.blocks` + `rega.model` | h5ad → final.pt |
