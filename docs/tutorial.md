@@ -27,10 +27,10 @@ The expression unit must be one of: `counts`, `cpm`, `logcpm`, `tpm`, or `logtpm
 
 | Data type | Matrix dimensions | Recommended unit |
 |-----------|-------------------|------------------|
-| **Bulk RNA-seq** | gene × donor/sample | TPM or logTPM |
-| **scRNA-seq / snRNA-seq** | gene × cell-type-specific pseudobulk sample | counts, CPM, or logCPM |
-| **Spatial RNA-seq** | gene × spatial spot | counts, CPM, or logCPM |
-| **Perturb-seq** | gene × perturbation-target pseudobulk | counts, CPM, or logCPM |
+| **Bulk RNA-seq** | gene × donor/sample | TPM or log2(TPM+1) |
+| **scRNA-seq / snRNA-seq** | gene × cell-type-specific pseudobulk sample | counts, CPM, or log2(CPM+1) |
+| **Spatial RNA-seq** | gene × spatial spot | counts, CPM, or log2(CPM+1) |
+| **Perturb-seq** | gene × perturbation-target pseudobulk | counts, CPM, or log2(CPM+1) |
 
 ### Pipeline structure
 
